@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Copa de las casas - Hogwarts</title>
+
+  <!-- Enlazar Bootstrap -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+  <!--Favicon-->
+  <link rel="icon" href="./assets/img/logoHogwarts.jpg" type="image/x-icon">
+
+
+  <!--SweetAlert-->
+  <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.min.css'>
+
+
+</head>
+
+<body>
+
+  <header class="bg-dark text-white text-center py-3">
+    <h1>COPA DE LAS CASAS</h1>
+  </header>
+
+  <section>
+    <div class="row-fluid text-center bg-dark">
+      <img src="./assets/img/torneoCasas.jpg" alt="Casas de Hogwarts" class="img-fluid">
+    </div>
+  </section>
+
+  <section>
+    <div class="container-fluid mt-5">
+      <div class="row">
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="nombre">Nombre y Apellido de alumno/a:</label>
+            <input type="text" class="form-control" id="nombre" placeholder="Ingrese nombre de alumno/a">
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="puntaje">Puntaje obtenido:</label>
+            <input type="number" class="form-control" id="puntaje" placeholder="Ingrese puntos obtenidos">
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="casa">Casa correspondiente:</label>
+            <select class="form-control" id="casa">
+              <option value="Slytherin">Slytherin</option>
+              <option value="Gryffindor">Gryffindor</option>
+              <option value="Ravenclaw">Ravenclaw</option>
+              <option value="Hufflepuff">Hufflepuff</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-3 d-flex align-items-end">
+          <div class="form-group">
+            <button class="btn btn-primary" onclick="capturarInformacion()">Agregar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-4">
+          <button class="btn btn-primary w-100 mb-3" onclick="calcularCasaGanadora()">Casa ganadora</button>
+        </div>
+        <div class="col-md-4">
+          <button class="btn btn-primary w-100 mb-3" onclick="calcularAlumnoMejorPuntaje()">Alumno con mayor puntaje
+            obtenido</button>
+        </div>
+        <div class="col-md-4">
+          <button class="btn btn-primary w-100" onclick="calcularPromedioPuntaje()">Promedio de puntaje de las cuatro
+            casas</button>
+        </div>
+      </div>
+    </div>
+
+
+    <div id="resultado" class="mt-3"></div>
+  </section>
+
+
+  <section>
+
+    <div class="text-center mt-5 mñ">
+      <div class="form-inline">
+        <label for="casa">Buscar magos por casa</label>
+        <select class="form-control mx-2" id="buscador">
+          <option selected>Elige una opción</option>
+          <option value="Slytherin">Slytherin</option>
+          <option value="Gryffindor">Gryffindor</option>
+          <option value="Ravenclaw">Ravenclaw</option>
+          <option value="Hufflepuff">Hufflepuff</option>
+        </select>
+        <button class="btn btn-primary" onclick="filtrarMagos()">Buscar</button>
+      </div>
+    </div>
+
+    <div id="listado" class="mt-3"></div>
+    </div>
+
+  </section>
+
+  <footer class="bg-dark text-white text-center py-3 mt-5">
+    <p>Esta página está destinada para fines estudiantiles</p>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="app.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.all.min.js"></script>
+
+
+</body>
+
+</html>
