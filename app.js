@@ -1,6 +1,5 @@
 const apiUrl = 'https://hp-api.onrender.com/api/characters/students';
 
-// Función para llenar el select con los datos obtenidos de la API
 function fillSelectWithData(data) {
     const selectElement = document.getElementById('selectData');
 
@@ -20,12 +19,11 @@ fetch(apiUrl)
         return response.json();
     })
     .then(data => {
-        fillSelectWithData(data); // Llenar el select con los datos obtenidos de la API
+        fillSelectWithData(data);
     })
     .catch(error => {
         console.error('Error:', error);
     });
-
 
 
 const agregarBtn = document.getElementById('agregarBtn');
@@ -45,37 +43,34 @@ filtrarMagosBtn.addEventListener('click', filtrarMagos);
 
 let magos = [];
 
-// Función para guardar la lista de magos en el Web Storage
 function guardarDatosEnStorage() {
     let magosJSON = JSON.stringify(magos);
     localStorage.setItem('magos', magosJSON);
 }
 
-
-//Función para que guarde la información agregada
 function capturarInformacion() {
     let nombre = document.getElementById("selectData").value;
     let puntaje = parseInt(document.getElementById("puntaje").value);
     let casa = document.getElementById("casa").value;
-  
+
     if (nombre.trim() === "" || isNaN(puntaje) || casa.trim() === "") {
-      dispararError();
+        dispararError();
     }
     else {
-      magos.push({ nombre: nombre, puntaje: puntaje, casa: casa });
-      guardarDatosEnStorage();
-  
-      document.getElementById("puntaje").value = "";
-  
-      mostrarMagosEnTabla(); // Llama a la función para mostrar la tabla actualizada
+        magos.push({ nombre: nombre, puntaje: puntaje, casa: casa });
+        guardarDatosEnStorage();
+
+        document.getElementById("puntaje").value = "";
+
+        mostrarMagosEnTabla(); 
     }
-  }
-  
+}
+
 
 function calcularCasaGanadora() {
     let casas = {};
 
-    // Recorrer el array de magos y acumular los puntos por casa
+    
     for (let i = 0; i < magos.length; i++) {
         let mago = magos[i];
         let casa = mago.casa;
@@ -88,7 +83,7 @@ function calcularCasaGanadora() {
         }
     }
 
-    // Encontrar la casa con mayor cantidad de puntos
+    
     let casaGanadora = "";
     let puntosGanadores = 0;
 
@@ -138,31 +133,30 @@ function filtrarMagos() {
     let casaSeleccionada = document.getElementById("buscador").value;
     let magosCasa = [];
 
-    if (casaSeleccionada === "") { // Cambia "!=" por "==="
+    if (casaSeleccionada === "") {
         dispararError();
         return;
     }
 
-    for (let i = 0; i < magos.length; i++) {
-        if (magos[i].casa === casaSeleccionada) {
-            magosCasa.push(magos[i]);
+    const magosJson = localStorage.getItem('magos');
+    const magosStorage = JSON.parse(magosJson);
+    for (let i = 0; i < magosStorage.length; i++) {
+        if (magosStorage[i].casa === casaSeleccionada) {
+            magosCasa.push(magosStorage[i]);
         }
     }
-
     let listado = document.getElementById("listado");
     listado.innerHTML = "";
 
-    // if (magosCasa.length > 0) {
-    //     for (let i = 0; i < magosCasa.length; i++) {
-    //         let alumno = magosCasa[i].nombre;
-    //         let puntos = magosCasa[i].puntaje;
-    //         let item = document.createElement("p");
-    //         item.innerText = "Mago: " + alumno + " - Puntos: " + puntos;
-    //         listado.appendChild(item);
-    //     }
-    // }
-    const magosJson = localStorage.getItem('magos');
-    console.log(magosJson);
+    if (magosCasa.length > 0) {
+        for (let i = 0; i < magosCasa.length; i++) {
+            let alumno = magosCasa[i].nombre;
+            let puntos = magosCasa[i].puntaje;
+            let item = document.createElement("p");
+            item.innerText = "Mago: " + alumno + " - Puntos: " + puntos;
+            listado.appendChild(item);
+        }
+    }
 }
 
 function dispararError() {
@@ -208,22 +202,20 @@ function dispararCasaGanadora(casaGanadora, puntosGanadores) {
     })
 }
 
-// Función para mostrar en tabla
 
 function mostrarMagosEnTabla() {
     let tabla = document.getElementById('tablaMagos');
     tabla.innerHTML = '';
-  
+
     for (let i = 0; i < magos.length; i++) {
-      let mago = magos[i];
-      let row = tabla.insertRow();
-      let cellNombre = row.insertCell(0);
-      let cellPuntaje = row.insertCell(1);
-      let cellCasa = row.insertCell(2);
-  
-      cellNombre.innerHTML = mago.nombre;
-      cellPuntaje.innerHTML = mago.puntaje;
-      cellCasa.innerHTML = mago.casa;
+        let mago = magos[i];
+        let row = tabla.insertRow();
+        let cellNombre = row.insertCell(0);
+        let cellPuntaje = row.insertCell(1);
+        let cellCasa = row.insertCell(2);
+
+        cellNombre.innerHTML = mago.nombre;
+        cellPuntaje.innerHTML = mago.puntaje;
+        cellCasa.innerHTML = mago.casa;
     }
-  }
-  
+}
