@@ -38,8 +38,11 @@
       <div class="row">
         <div class="col-md-3">
           <div class="form-group">
-            <label for="nombre">Nombre y Apellido de alumno/a:</label>
-            <input type="text" class="form-control" id="nombre" placeholder="Ingrese nombre de alumno/a">
+            <label for="selectData">Nombre de mago:</label>
+            <select class="form-select form-control" id="selectData">
+              <!-- Opción predeterminada sin contenido -->
+              <option selected>Ingrese mago</option>
+            </select>
           </div>
         </div>
         <div class="col-md-3">
@@ -61,7 +64,7 @@
         </div>
         <div class="col-md-3 d-flex align-items-end">
           <div class="form-group">
-            <button class="btn btn-primary" onclick="capturarInformacion()">Agregar</button>
+            <button id="agregarBtn" class="btn btn-primary">Agregar</button>
           </div>
         </div>
       </div>
@@ -69,17 +72,35 @@
   </section>
 
   <section>
+    <div class="container-fluid mt-5">
+      <table class="table table-striped" id="tablaMagos">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Puntaje</th>
+            <th>Casa</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Aquí se mostrarán los magos -->
+        </tbody>
+      </table>
+    </div>
+  </section>
+  
+
+  <section>
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-4">
-          <button class="btn btn-primary w-100 mb-3" onclick="calcularCasaGanadora()">Casa ganadora</button>
+          <button class="btn btn-primary w-100 mb-3" id="casaGanadoraBtn">Casa ganadora</button>
         </div>
         <div class="col-md-4">
-          <button class="btn btn-primary w-100 mb-3" onclick="calcularAlumnoMejorPuntaje()">Alumno con mayor puntaje
+          <button class="btn btn-primary w-100 mb-3" id="mejorAlumnoBtn">Alumno con mayor puntaje
             obtenido</button>
         </div>
         <div class="col-md-4">
-          <button class="btn btn-primary w-100" onclick="calcularPromedioPuntaje()">Promedio de puntaje de las cuatro
+          <button class="btn btn-primary w-100" id="promedioCasasBtn">Promedio de puntaje de las cuatro
             casas</button>
         </div>
       </div>
@@ -102,7 +123,7 @@
           <option value="Ravenclaw">Ravenclaw</option>
           <option value="Hufflepuff">Hufflepuff</option>
         </select>
-        <button class="btn btn-primary" onclick="filtrarMagos()">Buscar</button>
+        <button class="btn btn-primary" id="filtrarMagosBtn">Buscar</button>
       </div>
     </div>
 

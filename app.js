@@ -1,3 +1,48 @@
+const apiUrl = 'https://hp-api.onrender.com/api/characters/students';
+
+// Función para llenar el select con los datos obtenidos de la API
+function fillSelectWithData(data) {
+    const selectElement = document.getElementById('selectData');
+
+    // Iterar sobre los datos y crear las opciones para el select
+    data.forEach(item => {
+        const option = document.createElement('option');
+        option.textContent = item.name; // Suponiendo que el objeto tiene una propiedad "name"
+        option.value = item.name; // Suponiendo que el objeto tiene una propiedad "id"
+        selectElement.appendChild(option);
+    });
+}
+fetch(apiUrl)
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        fillSelectWithData(data); // Llenar el select con los datos obtenidos de la API
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+
+
+
+const agregarBtn = document.getElementById('agregarBtn');
+agregarBtn.addEventListener('click', capturarInformacion);
+
+const casaGanadoraBtn = document.getElementById('casaGanadoraBtn');
+casaGanadoraBtn.addEventListener('click', calcularCasaGanadora);
+
+const mejorAlumnoBtn = document.getElementById('mejorAlumnoBtn');
+mejorAlumnoBtn.addEventListener('click', calcularAlumnoMejorPuntaje);
+
+const promedioCasasBtn = document.getElementById('promedioCasasBtn');
+promedioCasasBtn.addEventListener('click', calcularPromedioPuntaje);
+
+const filtrarMagosBtn = document.getElementById('filtrarMagosBtn');
+filtrarMagosBtn.addEventListener('click', filtrarMagos);
+
 let magos = [];
 
 // Función para guardar la lista de magos en el Web Storage
@@ -9,21 +54,23 @@ function guardarDatosEnStorage() {
 
 //Función para que guarde la información agregada
 function capturarInformacion() {
-    let nombre = document.getElementById("nombre").value;
+    let nombre = document.getElementById("selectData").value;
     let puntaje = parseInt(document.getElementById("puntaje").value);
     let casa = document.getElementById("casa").value;
-
+  
     if (nombre.trim() === "" || isNaN(puntaje) || casa.trim() === "") {
-        dispararError();
+      dispararError();
     }
     else {
-        magos.push({ nombre: nombre, puntaje: puntaje, casa: casa });
-        guardarDatosEnStorage();
-
-        document.getElementById("nombre").value = "";
-        document.getElementById("puntaje").value = "";
+      magos.push({ nombre: nombre, puntaje: puntaje, casa: casa });
+      guardarDatosEnStorage();
+  
+      document.getElementById("puntaje").value = "";
+  
+      mostrarMagosEnTabla(); // Llama a la función para mostrar la tabla actualizada
     }
-}
+  }
+  
 
 function calcularCasaGanadora() {
     let casas = {};
@@ -91,7 +138,7 @@ function filtrarMagos() {
     let casaSeleccionada = document.getElementById("buscador").value;
     let magosCasa = [];
 
-    if (casaSeleccionada != "") {
+    if (casaSeleccionada === "") { // Cambia "!=" por "==="
         dispararError();
         return;
     }
@@ -105,17 +152,18 @@ function filtrarMagos() {
     let listado = document.getElementById("listado");
     listado.innerHTML = "";
 
-    if (magosCasa.length > 0) {
-        for (let i = 0; i < magosCasa.length; i++) {
-            let alumno = magosCasa[i].nombre;
-            let puntos = magosCasa[i].puntaje;
-            let item = document.createElement("p");
-            item.innerText = "Mago: " + alumno + " - Puntos: " + puntos;
-            listado.appendChild(item);
-        }
-    }
+    // if (magosCasa.length > 0) {
+    //     for (let i = 0; i < magosCasa.length; i++) {
+    //         let alumno = magosCasa[i].nombre;
+    //         let puntos = magosCasa[i].puntaje;
+    //         let item = document.createElement("p");
+    //         item.innerText = "Mago: " + alumno + " - Puntos: " + puntos;
+    //         listado.appendChild(item);
+    //     }
+    // }
+    const magosJson = localStorage.getItem('magos');
+    console.log(magosJson);
 }
-
 
 function dispararError() {
     Swal.fire({
@@ -132,9 +180,6 @@ function dispararExito(title, text) {
         text: text,
     })
 }
-
-
-
 
 function dispararCasaGanadora(casaGanadora, puntosGanadores) {
     let imagenCasaGanadora = "";
@@ -162,3 +207,23 @@ function dispararCasaGanadora(casaGanadora, puntosGanadores) {
 
     })
 }
+
+// Función para mostrar en tabla
+
+function mostrarMagosEnTabla() {
+    let tabla = document.getElementById('tablaMagos');
+    tabla.innerHTML = '';
+  
+    for (let i = 0; i < magos.length; i++) {
+      let mago = magos[i];
+      let row = tabla.insertRow();
+      let cellNombre = row.insertCell(0);
+      let cellPuntaje = row.insertCell(1);
+      let cellCasa = row.insertCell(2);
+  
+      cellNombre.innerHTML = mago.nombre;
+      cellPuntaje.innerHTML = mago.puntaje;
+      cellCasa.innerHTML = mago.casa;
+    }
+  }
+  
